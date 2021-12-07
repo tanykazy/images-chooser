@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnInit, Output, ViewChild, EventEmitter, Input } from '@angular/core';
 import { MatButton } from '@angular/material/button';
 
 @Component({
@@ -7,42 +7,32 @@ import { MatButton } from '@angular/material/button';
   styleUrls: ['./chooser.component.css']
 })
 export class ChooserComponent implements OnInit {
-  @ViewChild('files') files!: ElementRef;
+  @ViewChild('input') input!: ElementRef;
   @ViewChild('button') button!: MatButton;
-  @ViewChild('list') list!: ElementRef;
+
+  @Input() text: string;
+
+  @Input() accept: string | undefined;
+  @Input() capture: 'user' | 'environment' | undefined;
+  @Input() files: FileList | undefined;
+  @Input() multiple: boolean | undefined;
+
+  @Output() change = new EventEmitter<FileList>();
 
   constructor() {
+    this.text = 'Choose';
   }
 
   ngOnInit(): void {
   }
 
   onChangeFiles(event: Event): void {
-    if (this.files.nativeElement.files.length) {
-      this.list.nativeElement.innerHTML = "";
-      const list = document.createElement("ul");
-      this.list.nativeElement.appendChild(list);
-      for (let i = 0; i < this.files.nativeElement.files.length; i++) {
-        const li = document.createElement("li");
-        list.appendChild(li);
-
-        const img = document.createElement("img");
-        img.src = URL.createObjectURL(this.files.nativeElement.files[i]);
-        img.height = 60;
-        img.onload = function (event: Event) {
-          URL.revokeObjectURL((this as HTMLImageElement).src);
-        }
-        li.appendChild(img);
-        const info = document.createElement("span");
-        info.innerHTML = this.files.nativeElement.files[i].name + ": " + this.files.nativeElement.files[i].size + " bytes";
-        li.appendChild(info);
-      }
-    }
+    this.change.emit(this.input.nativeElement.files);
   }
 
   onClickButton(event: Event): void {
-    if (this.files) {
-      this.files.nativeElement.click();
+    if (this.input) {
+      this.input.nativeElement.click();
     }
   }
 

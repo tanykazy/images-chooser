@@ -1,3 +1,2 @@
-<input #files type="file" multiple accept="image/*" style="display:none" (change)="onChangeFiles($event)">
-<button #button mat-raised-button color="primary" (click)="onClickButton($event)">Select some files</button>
-<div #list></div>
+<input #input type="file" style="display:none" [multiple]="multiple" [accept]="accept" (change)="onChangeFiles($event)">
+<button #button mat-raised-button color="primary" (click)="onClickButton($event)">{{text}}</button>
