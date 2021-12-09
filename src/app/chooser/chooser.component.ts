@@ -17,7 +17,7 @@ export class ChooserComponent implements OnInit {
   @Input() files: FileList | undefined;
   @Input() multiple: boolean | undefined;
 
-  @Output() change = new EventEmitter<FileList>();
+  @Output() choose = new EventEmitter<FileList>();
 
   constructor() {
     this.text = 'Choose';
@@ -27,7 +27,7 @@ export class ChooserComponent implements OnInit {
   }
 
   onChangeFiles(event: Event): void {
-    this.change.emit(this.input.nativeElement.files);
+    this.choose.emit(this.input.nativeElement.files);
   }
 
   onClickButton(event: Event): void {
