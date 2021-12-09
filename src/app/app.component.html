@@ -1,2 +1,3 @@
-<app-chooser [text]="'Select some files'" [multiple]="true" [accept]="'image/*'" (change)="onChange($event)"></app-chooser>
-<div #list></div>
+<app-chooser [text]="'Select some files'" [multiple]="true" [accept]="'image/*'" (choose)="onChange($event)">
+</app-chooser>
+<app-previewer [filelist]="filelist"></app-previewer>
